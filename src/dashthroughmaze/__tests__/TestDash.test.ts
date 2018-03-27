@@ -1,9 +1,9 @@
 
 
-import {initializeTestRunner} from './TestDashRunner';
+import { initializeTestRunner } from './TestDashRunner';
 
 
-it('play', (done)=>{
+it('play', done=> {
   jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000;
 
   initializeTestRunner()

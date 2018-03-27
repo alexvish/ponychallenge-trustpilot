@@ -1,22 +1,19 @@
 
-
-import {isUndefined} from 'util';
-
 export interface TpGameState {
-  state: 'active'|'won'|'over'
-  'state-result': string
-  'hidden-url'?: string
+  state: 'Active'| 'active' |'won'|'over';
+  'state-result': string;
+  'hidden-url'?: string;
 }
 
 export interface TpMaze {
-  pony: number[]
-  domokun: number[]
-  'end-point': number[]
-  size: number[]
-  difficulty: number
-  data: ('west'|'north')[][]
-  maze_id: string
-  'game-state': TpGameState
+  pony: number[];
+  domokun: number[];
+  'end-point': number[];
+  size: number[];
+  difficulty: number;
+  data: ('west'|'north')[][];
+  maze_id: string;
+  'game-state': TpGameState;
 }
 
 export const TOP=1;
@@ -29,38 +26,50 @@ export interface Point {
   y: number;
 }
 
-export function eqPoint(a: Point, b: Point) {
+export function eqPoint(a: Point|undefined, b: Point|undefined) {
+  if (a === undefined) {
+    return b === undefined;
+  }
+  if (b === undefined) {
+    return false;
+  }
   return a.x === b.x && a.y === b.y;
 }
 
-export function toStringKey(p: Point):stirng {
+export function toStringKey(p: Point): string {
   return 'x: ' + p.x + ' ,y: ' + p.y;
 }
 
 export function moveDirection(from: Point, to: Point): string|undefined {
-  if (to.x == from.x) {
-    if (to.y == from.y - 1) {
-      return 'north'
+  if (to.x === from.x) {
+    if (to.y === from.y - 1) {
+      return 'north';
     }
-    if (to.y == from.y + 1) {
+    if (to.y === from.y + 1) {
       return 'south';
     }
   }
-  if (to.y == from.y) {
-    if (to.x == from.x - 1) {
+  if (to.y === from.y) {
+    if (to.x === from.x - 1) {
       return 'west';
     }
-    if (to.x == from.x + 1) {
+    if (to.x === from.x + 1) {
       return 'east';
     }
   }
   return undefined;
 }
 
+interface DfsContext {
+  currentPath: Point[];
+  visitedCells:{
+    [pointStringKey: string]: boolean /*always true*/;
+  };
+}
 
-/**
+/*
  * Maze made for humans, not for computers
- **/
+ */
 export class Maze {
   private _id: string;
   private _width: number;
@@ -79,20 +88,20 @@ export class Maze {
     this._exit = this.toPoint(tpMaze['end-point'][0]);
     this._cells = [];
     for (let x = 0; x < this.width; x++) {
-      let col = [];
+      let col:number[] = [];
       for (let y = 0; y < this.height; y++) {
         let tpCellData = tpMaze.data[y * this.width + x];
         let cell = 0;
-        if (x == 0) {
+        if (x === 0) {
           cell |= LEFT;
         }
-        if (x == this.width - 1) {
+        if (x === this.width - 1) {
           cell |= RIGHT;
         }
-        if (y == 0) {
+        if (y === 0) {
           cell |= TOP;
         }
-        if (y == this.height - 1) {
+        if (y === this.height - 1) {
           cell |= BOTTOM;
         }
         for (let tpBorder of tpCellData) {
@@ -174,37 +183,19 @@ export class Maze {
   }
 
   isDomokunNearPoint(pointToMoveTo:Point): boolean {
-    if (this.domokun.x === pointToMoveTo.x) {
-      if (this.domokun.y == pointToMoveTo.y) {
-        return true;
-      }
-      if (this.domokun.y == pointToMoveTo.y + 1 && (this._cells[pointToMoveTo.x][pointToMoveTo.y] & TOP) === 0) {
-        return true;
-      }
-      if (this.domokun.y == pointToMoveTo.y - 1 && (this._cells[pointToMoveTo.x][pointToMoveTo.y] & BOTTOM) === 0) {
-        return true;
-      }
-    }
-    if (this.domokun.y === pointToMoveTo.y) {
-      if (this.domokun.x == pointToMoveTo.x + 1 && (this._cells[pointToMoveTo.x][pointToMoveTo.y] & RIGHT) === 0) {
-        return true;
-      }
-      if (this.domokun.x == pointToMoveTo.x - 1 && (this._cells[pointToMoveTo.x][pointToMoveTo.y] & LEFT) === 0) {
-        return true;
-      }
-    }
-    return false;
+    let domokunMuves = [...this.possibleMoveLocations(this.domokun), this.domokun];
+    return domokunMuves.some(p => eqPoint(pointToMoveTo, p));
   }
 
-  escapeRoute() :Point[] {
+  escapeRoute(): Point[] {
     let routes: Point[][] = [[this.pony]];
     while(true) {
       let newRoutes: Point[][] = [];
       for(let r of routes) {
         let last:Point = r[r.length - 1];
-        //do not go to point near domokun
+        // do not go to point near domokun
         let filterOut:Point[] = [this.domokun, ...this.possibleMoveLocations(this.domokun)];
-        //and do not go back escape route
+        // and do not go back escape route
         if (r.length > 1) {
           filterOut.push(r[r.length - 2]);
         }
@@ -220,10 +211,10 @@ export class Maze {
         });
         newRoutes = newRoutes.concat(x);
       }
-      if (newRoutes.length == 0) {
+      if (newRoutes.length === 0) {
         return routes[0];
       }
-      //probably, cycle: maze is not prefect. route is long enough
+      // probably, cycle: maze is not prefect. route is long enough
       if (newRoutes[0].length > this.width * this.height) {
         return newRoutes[0];
       }
@@ -232,53 +223,37 @@ export class Maze {
   }
 
   exitPath():Point[] {
-    return this.dfsExitPath(this.pony, {currentPath:[], gray:{}, black:[]})
+    return this.dfsExitPath(this.pony, {currentPath:[], visitedCells:{}}) || [];
   }
 
-  dfsExitPath(from:Point, context: {currentPath:Point[], gray:{[key:string]:number}, black:{[key:string]:any}}):Point[] {
-    context.gray[toStringKey(from)] = context.currentPath.length;
-    context.currentPath.push(from);
-    let reachable:Point[] = this.possibleMoveLocations(from);
-    for(let p of reachable) {
-      if (!isUndefined(context.gray[toStringKey(p)])) {
-        if (!eqPoint(p, context.currentPath[context.currentPath.length - 2])) {
-          console.error('This maze is not prefect!!!!');
-          console.error('Cycle detected:');
-          for(let i = context.gray[toStringKey(p)]; i < context.currentPath.length; i++) {
-            console.error('   ', context.currentPath[i]);
-          }
-          console.error('   ', p);
-        }
-        continue;
-      }
-      if (!isUndefined(context.black[p])) {
-        continue;
-      }
-      if (eqPoint(p,this.exit)) {
-        //found!
-        let result = context.currentPath.slice(0);
-        result.push(p);
-        return result;
-      }
-      let result = this.dfsExitPath(p, context);
-      if (!isUndefined(result)) {
-        //path to exit found
-        return result;
+  dfsExitPath (p: Point, dfsContext: DfsContext ): Point[] | undefined {
+    // mark current visited
+    dfsContext.visitedCells[toStringKey(p)] = true;
+    // push current to path
+    dfsContext.currentPath.push(p);
+
+    if (eqPoint(p, this.exit)) {
+      // found exit
+      return dfsContext.currentPath.slice(0); // clone array
+    }
+    let reachable: Point[] = this.possibleMoveLocations(p);
+    // filter out visited
+    reachable = reachable.filter(nextP => !dfsContext.visitedCells[toStringKey(nextP)]);
+    for (let next of reachable) {
+      let path = this.dfsExitPath(next,dfsContext);
+      if (path) {
+        return path;
       }
     }
-    context.currentPath.pop();
-    delete context.gray[toStringKey(from)];
-    context.black[toStringKey(from)] = true;
+    // remove point from current path
+    dfsContext.currentPath.pop();
+    return undefined;
   }
 
   toPoint(loc: number):Point {
     return {
       x: loc % this.width,
       y: Math.floor(loc/this.width)
-    }
+    };
   }
 }
-
-
-
-

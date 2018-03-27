@@ -1,0 +1,100 @@
+.cell {
+    fill: #fffff7;
+    stroke: #444;
+    stroke-width: 3px;
+    transition: fill .4s ease-in-out;
+}
+
+.cell-exit {
+    fill: #afa;
+}
+
+.cell-escape {
+    fill: hotpink;
+}
+
+.walls-0 {
+    stroke-dasharray: 0,120;
+}
+
+/* top */
+.walls-1 {
+    stroke-dasharray: 30,90;
+}
+
+/* left */
+.walls-2 {
+    stroke-dasharray: 0,90,30 ;
+}
+
+/* top left */
+.walls-3 {
+    stroke-dasharray: 30,30,0 ;
+}
+
+/* bottom */
+.walls-4 {
+    stroke-dasharray: 0,60,30,30 ;
+}
+
+/* top bottom */
+.walls-5 {
+    stroke-dasharray: 30 ;
+}
+
+/* left bottom */
+.walls-6 {
+    stroke-dasharray: 0,60,60 ;
+}
+
+/* top left bottom */
+.walls-7 {
+    stroke-dasharray: 30,30,60 ;
+}
+
+/* right */
+.walls-8 {
+    stroke-dasharray: 0,30,30,60 ;
+}
+
+/* top right */
+.walls-9 {
+    stroke-dasharray: 60,60 ;
+}
+
+
+/* left right */
+.walls-10 {
+    stroke-dasharray: 0,30,30,30,30 ;
+}
+
+/* top left right */
+.walls-11 {
+    stroke-dasharray: 60,30,30;
+}
+
+/* bottom right */
+.walls-12 {
+    stroke-dasharray: 0,30,60,30;
+}
+
+/* top bottom right */
+.walls-13 {
+    stroke-dasharray: 90,30;
+}
+
+/* left bottom right */
+.walls-14 {
+    stroke-dasharray: 0,30,90,30;
+}
+
+/* top left bottom right */
+.walls-15 {
+    stroke-dasharray: 120,0;
+}
+
+.marker {
+    alignment-baseline: middle;
+    text-anchor: middle;
+    font-family: monospace;
+}

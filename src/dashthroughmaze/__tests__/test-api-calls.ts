@@ -1,6 +1,7 @@
 
 import * as https from 'https';
-import {isUndefined} from 'util';
+import { isUndefined } from 'util';
+import { TpMaze } from '../dash';
 
 const MAZE_INIT_DATA = {
   "maze-width": 17,
@@ -9,12 +10,10 @@ const MAZE_INIT_DATA = {
   "difficulty": 4
 };
 
-
 export function generateMaze(): Promise<string> {
   return new Promise((resolve,reject) => {
 
     let mazeInitJson = JSON.stringify(MAZE_INIT_DATA);
-
 
     let reqOptions = {
       host: 'ponychallenge.trustpilot.com',
@@ -27,11 +26,11 @@ export function generateMaze(): Promise<string> {
     };
 
     let req = https.request(reqOptions, (res) => {
-      if (res.statusCode != 200) {
+      if (res.statusCode !== 200) {
         reject('Error: ' + reqOptions.path + ' : ' + res.statusMessage);
       }
       let data = '';
-      res.on('data', d => { data += d});
+      res.on('data', d => { data += d; });
       res.on('error', err => reject(err));
       res.on('end', ()=> {
         try {
@@ -61,11 +60,11 @@ export function printMaze(mazeId: string): Promise<any> {
     };
 
     let req = https.request(reqOptions, (res) => {
-      if (res.statusCode != 200) {
+      if (res.statusCode !== 200) {
         reject('Error: ' + reqOptions.path + ' : ' + res.statusMessage);
       }
       let data = '';
-      res.on('data', d => { data += d});
+      res.on('data', d => { data += d; });
       res.on('error', err => reject(err));
       res.on('end', ()=> {
         console.log('maze: ' + mazeId + '\n' + data);
@@ -85,11 +84,11 @@ export function getMaze(mazeId: string): Promise<TpMaze> {
     };
 
     let req = https.request(reqOptions, (res) => {
-      if (res.statusCode != 200) {
+      if (res.statusCode !== 200) {
         reject('Error: ' + reqOptions.path + ' : ' + res.statusMessage);
       }
       let data = '';
-      res.on('data', d => { data += d});
+      res.on('data', d => { data += d; });
       res.on('error', err => reject(err));
       res.on('end', ()=> {
         try {
@@ -123,11 +122,11 @@ export function movePony(mazeId: string,direction: string): Promise<any> {
     };
 
     let req = https.request(reqOptions, (res) => {
-      if (res.statusCode != 200) {
+      if (res.statusCode !== 200) {
         reject('Error: in POST ' + reqOptions.path + ' : ' + res.statusMessage);
       }
       let data = '';
-      res.on('data', d => { data += d});
+      res.on('data', d => { data += d; });
       res.on('error', err => reject(err));
       res.on('end', ()=> {
         try {

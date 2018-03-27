@@ -22,7 +22,7 @@ It "looks" like API generated mazes are "prefect" ones -  they have a only one p
 
 These are implications:
 
-1. In non-prefect maze there could be more then one path to exit. How to find the shortest one do you know? 
+1. In non-prefect maze there could be more then one path to exit. How would you find the shortest one? 
 2. In non-prefect maze pony have more ways to escape from domokun: pony strategy could be to run around 
    cycle, followed by domokun.
 
@@ -48,17 +48,12 @@ Usage is:
 4. Go back go exitPath when domokun go away.
 
 
-Method `exitPath` uses depth-first search to build the path. I use 
-WITE/GRAY/BLACK variant which is overkill for this task (but still work). For undirected
-graphs it is enogh to have WHITE/BLACK or NOT_VISITED/VISITED variant.
+Method `exitPath` uses depth-first search to build the path. 
 
 Method `escapeRoute` builds longest escape route using a sort of breath first traversal
 
 Tests
 -----
-
-As UI is not ready, the only way to play with this are tests.
-TestDash.test.ts provide the way to run game against trust pilot api.
 
 Run tests with
 ```

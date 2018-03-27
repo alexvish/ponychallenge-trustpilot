@@ -1,46 +1,4 @@
-
-
 import {BOTTOM, Maze, RIGHT, TpMaze} from '../dash';
-
-it("maze", ()=>{
-  let maze = new Maze(tpMaze);
-  expect(maze.getCell(2,1)).toEqual(RIGHT|BOTTOM);
-  expect(maze.exit).toEqual({x:2,y:4});
-  expect(maze.pony).toEqual({x: 11, y: 14});
-  expect(maze.domokun).toEqual({x: 2, y: 7});
-  expect(maze.possibleMoveLocations({x:3,y:4})).toEqual([{x:3,y:3},{x:3, y:5}]);
-  expect(maze.possibleMoveLocations({x:3,y:2})).toEqual([{x:3,y:1}]);
-  expect(maze.possibleMoveLocations({x:10,y:3})).toEqual([{x:10,y:4},{x:11,y:3}]);
-  expect(maze.isDomokunNearPoint({x: 3, y: 7})).toBeFalsy();
-  expect(maze.isDomokunNearPoint({x: 1, y: 7})).toBeTruthy();
-  expect(maze.isDomokunNearPoint({x: 2, y: 7})).toBeTruthy();
-  expect(maze.isDomokunNearPoint({x: 0, y: 7})).toBeFalsy();
-});
-
-it("escapeRoute", ()=>{
-  let maze = new Maze(tpMaze);
-  //put pony above and left to domokun
-  maze.update({
-    pony: [17*6 + 3],
-    domokun: [121]
-  });
-  //should lead to right-down corner
-  let escapeRoute = maze.escapeRoute();
-  expect(escapeRoute[escapeRoute.length - 1]).toEqual({x:5,y: 2});
-  expect(escapeRoute.length).toEqual(99);
-  console.log(escapeRoute);
-});
-
-it("exitpath", ()=> {
-  let maze = new Maze(tpMaze);
-  let exitPath = maze.exitPath();
-  expect(exitPath[0]).toEqual(maze.pony);
-  expect(exitPath[exitPath.length - 1]).toEqual(maze.exit)
-  expect(exitPath.length).toEqual(100);
-  expect(exitPath[exitPath.length - 1]).toEqual(maze.exit);
-});
-
-
 
 const tpMaze: TpMaze = {
   "pony": [
@@ -830,3 +788,56 @@ const tpMaze: TpMaze = {
  |   |                           |   |         P                 |   |
  +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
  ***/
+
+it("maze", ()=> {
+  let maze = new Maze(tpMaze);
+  expect(maze.getCell(2,1)).toEqual(RIGHT|BOTTOM);
+  expect(maze.exit).toEqual({x:2,y:4});
+  expect(maze.pony).toEqual({x: 11, y: 14});
+  expect(maze.domokun).toEqual({x: 2, y: 7});
+  expect(maze.possibleMoveLocations({x:3,y:4})).toEqual([{x:3,y:3},{x:3, y:5}]);
+  expect(maze.possibleMoveLocations({x:3,y:2})).toEqual([{x:3,y:1}]);
+  expect(maze.possibleMoveLocations({x:10,y:3})).toEqual([{x:10,y:4},{x:11,y:3}]);
+  expect(maze.isDomokunNearPoint({x: 3, y: 7})).toBeFalsy();
+  expect(maze.isDomokunNearPoint({x: 1, y: 7})).toBeTruthy();
+  expect(maze.isDomokunNearPoint({x: 2, y: 7})).toBeTruthy();
+  expect(maze.isDomokunNearPoint({x: 0, y: 7})).toBeFalsy();
+});
+
+it("escapeRoute", ()=> {
+  let maze = new Maze(tpMaze);
+  // put pony above and left to domokun
+  maze.update({
+    pony: [17*6 + 3],
+    domokun: [121],
+
+    // rest props are fillers
+    'end-point': [],
+    size:[],
+    difficulty: 42,
+    data: [],
+    maze_id: '',
+    'game-state': {
+      state: 'Active',
+      'state-result': ''
+    }
+  });
+  // should lead to right-down corner
+  let escapeRoute = maze.escapeRoute();
+  expect(escapeRoute[escapeRoute.length - 1]).toEqual({x:5,y: 2});
+  expect(escapeRoute.length).toEqual(99);
+  console.log(escapeRoute);
+});
+
+it("exitpath", ()=> {
+  let maze = new Maze(tpMaze);
+  let exitPath = maze.exitPath();
+  expect(exitPath).toBeDefined();
+  if ( exitPath === undefined ) {
+    return;
+  }
+  expect(exitPath[0]).toEqual(maze.pony);
+  expect(exitPath[exitPath.length - 1]).toEqual(maze.exit);
+  expect(exitPath.length).toEqual(100);
+  expect(exitPath[exitPath.length - 1]).toEqual(maze.exit);
+});

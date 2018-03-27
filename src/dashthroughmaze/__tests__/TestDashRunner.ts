@@ -7,7 +7,7 @@ import {isUndefined} from 'util';
 export class TestRunner {
   private _maze: Maze;
   private _exitPath:Point[];
-  private _escapeRoute: Point[]|undefined;
+  private _escapeRoute: Point[] | undefined;
   private _state: 'running' | 'win'| 'loose';
   private _currentPonyLocation: Point;
 
@@ -15,38 +15,42 @@ export class TestRunner {
   constructor(tpMaze: TpMaze) {
     this._maze = new Maze(tpMaze);
     this._exitPath = this._maze.exitPath();
-    this._currentPonyLocation = this._exitPath.shift();
+    this._currentPonyLocation = this._exitPath.shift() as Point;
   }
 
   run(): Promise<TestRunner> {
-    let loop = () => {
-      if(!this.isRunning()) {
+    let loop: () => Promise<TestRunner>;
+    loop = () => {
+      if (!this.isRunning()) {
         return Promise.resolve(this);
       }
-      return this.move().then(()=>loop());
+      return this.move().then(() => loop());
     };
     return loop();
   }
 
   checkState() {
     if (eqPoint(this._maze.domokun,this._maze.pony)) {
-      this._state = 'looze';
+      this._state = 'loose';
     } else if (eqPoint(this._maze.exit, this._maze.pony)) {
       this._state = 'win';
     } else {
-      this._state = 'running'
+      this._state = 'running';
     }
   }
 
-  isRunning() : boolean {
+  isRunning(): boolean {
     this.checkState();
-    return this.state === 'running'
+    return this.state === 'running';
   }
 
 
 
   move(): Promise<TestRunner> {
     let nextPoint:Point;
+    if (this._exitPath === undefined) {
+      return Promise.resolve(this);
+    }
     if (this._maze.isDomokunNearPoint(this._exitPath[0])) {
       console.log('Domokun on my way!!!!');
       if (isUndefined(this._escapeRoute)) {
@@ -54,24 +58,24 @@ export class TestRunner {
         this._escapeRoute = this._maze.escapeRoute();
         this._escapeRoute.shift();
       }
-      if (this._escapeRoute.length == 0) {
-        //we loosing
+      if (this._escapeRoute.length === 0) {
+        // we are loosing
         console.log('No way out!!!');
-        nextPoint = this._exitPath.shift();
+        nextPoint = this._exitPath.shift() as Point;
       } else {
         console.log('Follow escape route');
-        nextPoint = this._escapeRoute.shift();
+        nextPoint = this._escapeRoute.shift() as Point;
         this._exitPath.unshift(this._currentPonyLocation);
       }
     } else {
       this._escapeRoute = undefined;
-      nextPoint = this._exitPath.shift();
+      nextPoint = this._exitPath.shift() as Point;
     }
     let direction = moveDirection(this._currentPonyLocation, nextPoint);
     if (isUndefined(direction)) {
       let f = this._currentPonyLocation;
       let t = nextPoint;
-      return Promise.reject(`No move from (${f.x}, ${f.y}) to (${t.x}, ${t.y}))`)
+      return Promise.reject(`No move from (${f.x}, ${f.y}) to (${t.x}, ${t.y}))`);
     }
     return movePony(this._maze.id, direction).then(result => {
       return getMaze(this._maze.id)
@@ -85,7 +89,7 @@ export class TestRunner {
           this._currentPonyLocation = this._maze.pony;
           console.log('Move. pony: ', this._maze.pony, 'domokun:', this._maze.domokun, 'move result:', result );
           return Promise.resolve(this);
-        })
+        });
     });
   }
 

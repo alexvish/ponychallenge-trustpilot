@@ -1,19 +1,19 @@
 import * as React from 'react';
 import './App.css';
-
-const logo = require('./logo.svg');
+import CssBaseline from 'material-ui/CssBaseline';
+import 'typeface-roboto';
+import 'highlight.js/styles/github-gist.css';
+import Notification from './components/Notification';
+import Layout from './components/Layout';
+import {Route} from 'react-router';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <div>
+        <CssBaseline/>
+        <Route path="/" component={Layout}/>
+        <Notification/>
       </div>
     );
   }
