@@ -112,7 +112,7 @@ export default function render(locals: any): string {
     html = html.replace('@@REPLACE_STYLES@@', styles);
     html = html.replace('@@REPLACE_APP@@', app);
 
-    return '<!DOCTTYPE html>' + html;
+    return '<!DOCTYPE html>' + html;
   } catch (e) {
     console.error(e);
     throw e;
