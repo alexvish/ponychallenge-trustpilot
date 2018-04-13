@@ -56,6 +56,7 @@ export const Html:React.SFC<HtmlProps> = (props)=> {
   return (
     <html lang="en">
       <head>
+        <meta name="google-site-verification" content="2SyGd2cUeoUZpRZC1v8UalL5tFUzRroz93avBnuxTHQ" />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"/>
         <meta name="theme-color" content="#000000"/>
