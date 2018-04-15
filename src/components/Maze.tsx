@@ -125,13 +125,21 @@ export const MazeComponent: React.SFC<MazeComponentProps> = (props) => {
     if (props.domokun) {
       markers.push(<MazeMarkerComponent key="domokun" x={props.domokun.x} y={props.domokun.y} marker={'D'}/>);
     }
-
+    const pixelWidth = maze.width * 30 + 70;
+    const pixelHeight = maze.height * 30 + 70;
     return (
-      <svg width={maze.width * 30 + 70} height={maze.height * 30 + 70}>
-        {xCoordMarkers}
-        {yCoordMarkers}
-        {mazeCells}
-        {markers}
+      <svg
+        style={{
+          width: '100%',
+          maxWidth: pixelWidth
+        }}
+        preserveAspectRatio='xMinYMin meet'
+        viewBox={`0 0 ${pixelWidth} ${pixelHeight}`}
+      >
+          {xCoordMarkers}
+          {yCoordMarkers}
+          {mazeCells}
+          {markers}
       </svg>
     );
   } else {
