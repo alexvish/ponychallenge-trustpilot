@@ -12,6 +12,7 @@ import {combineReducers, createStore} from 'redux';
 import Notification from '../../components/Notification';
 import {VisualGame} from '../../components/Game';
 import createMaze from './testmaze';
+import Trustpilot from '../../components/Trustpilot';
 
 interface NotificationCallFormState {
     message: string;
@@ -154,4 +155,5 @@ storiesOf('Components', module)
           'state-result': 'test',
         }}
       />);
-  });
+  })
+  .add('Trustpilot', () => (<Trustpilot/>));

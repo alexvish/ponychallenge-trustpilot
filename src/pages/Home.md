@@ -1,9 +1,22 @@
+---
+prependJs:
+    - "import Trustpilot from '../components/Trustpilot';"
+---
 # Solution to trustpilot pony challenge
 
 This is complete solution to trustpilot's [pony challenge](https://ponychallenge.trustpilot.com/index.html).
 
+Source code available from github repository [alexvish/ponychallenge-trustpilot](https://github.com/alexvish/ponychallenge-trustpilot) 
+
+Check solution to trustpilots anagram code challenge here in the repository[alexvish/followthewhiterabbit-trustpilot](https://github.com/alexvish/followthewhiterabbit-trustpilot)
+
 A company named [Trustpilot](https://www.trustpilot.com/) hires developers. Candidates should submit solution
 to thier code challenge. This is the solution to pony challenge.
+
+
+{{<Trustpilot/>}}
+
+
 
 ## The task
 Trustpilot provides game api [(swagger)](https://ponychallenge.trustpilot.com/api-docs/index.html#/pony-challenge) that 
