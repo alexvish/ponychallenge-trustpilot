@@ -8,7 +8,7 @@ This is complete solution to trustpilot's [pony challenge](https://ponychallenge
 
 Source code available from github repository [alexvish/ponychallenge-trustpilot](https://github.com/alexvish/ponychallenge-trustpilot) 
 
-Check solution to trustpilots anagram code challenge here in the repository[alexvish/followthewhiterabbit-trustpilot](https://github.com/alexvish/followthewhiterabbit-trustpilot)
+Check solution to trustpilots anagram code challenge here in the repository [alexvish/trustpilot-anagram](https://github.com/alexvish/trustpilot-anagram)
 
 A company named [Trustpilot](https://www.trustpilot.com/) hires developers. Candidates should submit solution
 to thier code challenge. This is the solution to pony challenge.

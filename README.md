@@ -1,7 +1,11 @@
 # Solution to trustpilot pony challenge
 
 This is complete solution to trustpilot's [pony challenge](https://ponychallenge.trustpilot.com/index.html).
-You will enjoy it if you are above 35 and still live with your mom.
+
+Check solution to trustpilots anagram code challenge here in the repository [alexvish/trustpilot-anagram](https://github.com/alexvish/trustpilot-anagram)
+
+A company named [Trustpilot](https://www.trustpilot.com/) hires developers. Candidates should submit solution
+to thier code challenge. This is the solution to pony challenge.
 
 ## The task
 Trustpilot provides game api [(swagger)](https://ponychallenge.trustpilot.com/api-docs/index.html#/pony-challenge) that 
