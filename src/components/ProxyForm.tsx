@@ -1,12 +1,12 @@
 import * as React from 'react';
-import withStyles from 'material-ui/styles/withStyles';
-import {WithStyles} from 'material-ui';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import {WithStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import {connect} from 'react-redux';
-import Badge from 'material-ui/Badge';
-import DoneIcon from 'material-ui-icons/Done';
-import Paper from 'material-ui/Paper';
+import Badge from '@material-ui/core/Badge';
+import DoneIcon from '@material-ui/icons//Done';
+import Paper from '@material-ui/core/Paper';
 import {setProxyUrl,verifyProxyAction} from '../actions/actions';
 
 const decorate = withStyles((theme)=>({

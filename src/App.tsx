@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import CssBaseline from 'material-ui/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import 'typeface-roboto';
 import 'highlight.js/styles/github-gist.css';
 import Notification from './components/Notification';

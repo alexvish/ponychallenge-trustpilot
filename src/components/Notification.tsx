@@ -1,9 +1,9 @@
 import * as React from 'react';
-import Snackbar from 'material-ui/Snackbar';
-import IconButton from 'material-ui/IconButton';
-import CloseIcon from 'material-ui-icons/Close';
-import withStyles from 'material-ui/styles/withStyles';
-import {WithStyles} from 'material-ui';
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons//Close';
+import withStyles from '@material-ui/core/styles/withStyles';
+import {WithStyles} from '@material-ui/core/styles';
 import {hideNotificationAction} from '../actions/actions';
 import {connect} from 'react-redux';
 

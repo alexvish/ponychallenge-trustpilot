@@ -1,6 +1,6 @@
 import * as React from 'react';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {sagas as playSagas} from './reducer/play';
 import rPlay from './reducer/play';

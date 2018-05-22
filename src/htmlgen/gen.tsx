@@ -4,12 +4,12 @@ import {createStore} from 'redux';
 import {Provider} from 'react-redux';
 import {StaticRouter} from 'react-router';
 import App from '../App';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import createMuiTheme from 'material-ui/styles/createMuiTheme';
-import {Theme} from 'material-ui';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+import {Theme} from '@material-ui/core';
 import JssProvider from 'react-jss/lib/JssProvider';
 import {GenerateClassName, SheetsRegistry} from 'jss';
-import createGenerateClassName from 'material-ui/styles/createGenerateClassName';
+import createGenerateClassName from '@material-ui/core/styles/createGenerateClassName';
 
 const theme = createMuiTheme();
 

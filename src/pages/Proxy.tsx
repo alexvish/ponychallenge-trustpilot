@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import ProxyMarkdown from './Proxy.md';
 import ProxyForm from '../components/ProxyForm';
-import {WithStyles} from 'material-ui';
+import {WithStyles} from '@material-ui/core/styles';
 
 
 class Proxy extends React.Component<WithStyles<'formRow'|'textField'>> {

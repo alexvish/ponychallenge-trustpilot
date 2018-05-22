@@ -1,13 +1,13 @@
 import * as React from 'react';
-import withStyles from 'material-ui/styles/withStyles';
-import {WithStyles} from 'material-ui';
+import withStyles from '@material-ui/core/styles/withStyles';
+import {WithStyles} from '@material-ui/core';
 import {connect} from 'react-redux';
-import PlayArrowIcon from 'material-ui-icons/PlayArrow';
-import PauseIcon from 'material-ui-icons/Pause';
-import SkipNextIcon from 'material-ui-icons/SkipNext';
-import IconButton from 'material-ui/IconButton';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
+import PlayArrowIcon from '@material-ui/icons//PlayArrow';
+import PauseIcon from '@material-ui/icons//Pause';
+import SkipNextIcon from '@material-ui/icons//SkipNext';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import {Maze, Point, TpGameState} from '../dashthroughmaze/dash';
 import {MazeComponent} from './Maze';
 import {nextMoveAction} from '../actions/actions';
@@ -54,7 +54,7 @@ export interface GameState {
 
 type GamePropsExt = GameProps & WithStyles<'root'|'gameControls'|'button'|'playIcon'>;
 
-const MOVE_TIMEOUT = 2000;
+const BETWEEN_MOVE_TIMEOUT = 500;
 
 class GameComponent extends React.Component<GamePropsExt, GameState> {
   constructor(props: any, context?: any) {
@@ -69,7 +69,7 @@ class GameComponent extends React.Component<GamePropsExt, GameState> {
       clearTimeout(this.state.playTimer);
     }
     if (this.state.play) {
-      let t = setTimeout(this.handleNextMove, MOVE_TIMEOUT as  (number|undefined));
+      let t = setTimeout(this.handleNextMove, BETWEEN_MOVE_TIMEOUT as  (number|undefined));
       this.setState({
         playTimer: t
       });
@@ -102,7 +102,6 @@ class GameComponent extends React.Component<GamePropsExt, GameState> {
         escapeRoute? [...escapeRoute] : escapeRoute
         );
     }
-    this.schelduleNextMove();
   }
 
   handlePlayButton = () => {
@@ -120,11 +119,14 @@ class GameComponent extends React.Component<GamePropsExt, GameState> {
   }
 
   componentWillReceiveProps(nextProps: GamePropsExt) {
-    if (nextProps.gameState.state !== 'Active' && nextProps.gameState.state !== 'active') {
-      this.cancelNextMove();
+    let nextStateActive: boolean = nextProps.gameState.state === 'Active' || nextProps.gameState.state === 'active' ;
+
+    if (!nextStateActive) {
       this.setState({
         play: false
       });
+    } else if (nextProps.controlsEnabled && ! this.props.controlsEnabled) {
+      this.schelduleNextMove();
     }
   }
 

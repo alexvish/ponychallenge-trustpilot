@@ -1,27 +1,27 @@
 import * as React from 'react';
-import {WithStyles} from 'material-ui';
-import withStyles from 'material-ui/styles/withStyles';
-import AppBar from 'material-ui/AppBar';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
-import HomeIcon from 'material-ui-icons/Home';
-import DoneIcon from 'material-ui-icons/Done';
-import SettingsApplicationsIcon from 'material-ui-icons/SettingsApplications';
-import FlagIcon from 'material-ui-icons/Flag';
-import Typography from 'material-ui/Typography';
-import Toolbar from 'material-ui/Toolbar';
-import Divider from 'material-ui/Divider';
-import List from 'material-ui/List';
-import Hidden from 'material-ui/Hidden';
-import Drawer from 'material-ui/Drawer';
+import {WithStyles, withStyles} from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons//Menu';
+import HomeIcon from '@material-ui/icons//Home';
+import DoneIcon from '@material-ui/icons//Done';
+import SettingsApplicationsIcon from '@material-ui/icons//SettingsApplications';
+import FlagIcon from '@material-ui/icons//Flag';
+import Typography from '@material-ui/core/Typography';
+import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
 import NavItem from './NavItem';
-import Badge from 'material-ui/Badge';
+import Badge from '@material-ui/core/Badge';
 import {connect} from 'react-redux';
 import Play from '../pages/Play';
 import Proxy from '../pages/Proxy';
 import Home from '../pages/Home';
 import {Redirect, Route, Switch} from 'react-router';
 import GamesNav from './GamesNav';
+import {Theme} from '@material-ui/core';
 
 
 const drawerWidth = 240;
@@ -41,7 +41,7 @@ const proxyIconMapStateToProps = (state) => ({
   proxyOk: !! (state.proxy && state.proxy.verified)
 });
 export const ProxyIcon = connect(proxyIconMapStateToProps)(VisualProxyIcon);
-const decorate = withStyles((theme)=>({
+const decorate = withStyles((theme: Theme)=>({
   root: {
     flexGrow: 1,
     height: '100%',
@@ -72,7 +72,7 @@ const decorate = withStyles((theme)=>({
     width: drawerWidth,
     height: '100vh',
     [theme.breakpoints.up('lg')]: {
-      position: 'fixed',
+      position: 'fixed' as 'fixed',
     },
   },
   content: {
@@ -110,13 +110,19 @@ class LayoutFrame extends React.Component<AppFramePropsWithStyles, AppFrameState
     });
   }
 
+  closeDrawer = () => {
+    this.setState({
+      mobileDrawerOpen: false
+    });
+  }
+
   render() {
     let { classes, theme } = this.props;
     const drawer = (
       <div>
         <div className={classes.toolbar}/>
         <Divider/>
-        <List>
+        <List onClick={this.closeDrawer}>
           <NavItem
             text="Home"
             path="/"

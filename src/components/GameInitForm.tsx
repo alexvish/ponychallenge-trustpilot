@@ -1,16 +1,15 @@
 import * as React from 'react';
-import withStyles from 'material-ui/styles/withStyles';
-import {WithStyles} from 'material-ui';
-import TextField from 'material-ui/TextField';
-import {MenuItem} from 'material-ui/Menu';
-import {FormLabel, FormControlLabel, FormControl} from 'material-ui/Form';
-import Radio, {RadioGroup} from 'material-ui/Radio';
-import Button from 'material-ui/Button';
-import Paper from 'material-ui/Paper';
+import withStyles from '@material-ui/core/styles/withStyles';
+import {WithStyles} from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import {FormLabel, FormControlLabel, FormControl, Radio, RadioGroup} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
 import {connect} from 'react-redux';
 import CheckProxyOk from './CheckProxyOk';
 import {MazeInitData} from '../api/api';
 import {initMazeRequestAction} from '../actions/actions';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const decorate = withStyles((theme) => ({
   root: {

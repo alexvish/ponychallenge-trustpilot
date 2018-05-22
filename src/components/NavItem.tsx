@@ -1,12 +1,12 @@
 import * as React from 'react';
-import ListItem from 'material-ui/List/ListItem';
-import ListItemIcon from 'material-ui/List/ListItemIcon';
-import ListItemText from 'material-ui/List/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import * as PropTypes from 'prop-types';
 import {History} from 'history';
-import withStyles from 'material-ui/styles/withStyles';
-import {WithStyles} from 'material-ui';
+import withStyles from '@material-ui/core/styles/withStyles';
 import {Route} from 'react-router';
+import {WithStyles} from '@material-ui/core';
 // import {Link} from 'react-router-dom';
 
 const decorate = withStyles((theme) => ({
