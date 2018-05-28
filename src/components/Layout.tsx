@@ -22,6 +22,7 @@ import Home from '../pages/Home';
 import {Redirect, Route, Switch} from 'react-router';
 import GamesNav from './GamesNav';
 import {Theme} from '@material-ui/core';
+import withTracker from './WithTracker';
 
 
 const drawerWidth = 240;
@@ -203,9 +204,9 @@ class LayoutFrame extends React.Component<AppFramePropsWithStyles, AppFrameState
         <main className={classes.content}>
           <div className={classes.toolbar}/>
           <Switch>
-            <Route exact={true} path="/" component={Home}/>
-            <Route exact={true} path="/proxy" component={Proxy}/>
-            <Route path="/play" component={Play} />
+            <Route exact={true} path="/" component={withTracker(Home)}/>
+            <Route exact={true} path="/proxy" component={withTracker(Proxy)}/>
+            <Route path="/play" component={withTracker(Play)} />
             <Redirect to=""/>
           </Switch>
         </main>

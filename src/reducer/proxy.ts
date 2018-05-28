@@ -9,6 +9,7 @@ import {
 } from '../actions/actions';
 import {call, put, takeEvery} from 'redux-saga/effects';
 import * as API from '../api/api';
+import * as ReactGA from 'react-ga';
 
 /* State shape */
 type ProxyState = {
@@ -59,6 +60,11 @@ export function* verifyProxyUrlSaga(action: VeryfyProxyUrlAction) {
   try {
     let url = action.url;
     let result = yield call(API.verifyApi, url);
+    ReactGA.event({
+      category: 'proxy',
+      action: 'ProxyVerified',
+      label: url
+    });
     yield put(verifyProxyAction(url,{success: result.verified}));
   } catch (e) {
     let message = 'Test proxy url failed: ';
@@ -67,6 +73,11 @@ export function* verifyProxyUrlSaga(action: VeryfyProxyUrlAction) {
     } else if (typeof e.message === 'string') {
       message += e.message;
     }
+    ReactGA.exception({
+      category: 'proxy',
+      action: 'ProxyVerifyError',
+      message: message
+    });
     yield put(showNotificaitonAction(message));
   } finally {
     yield put(setProxyTestButtonState(true));

@@ -21,6 +21,7 @@ import * as API from '../api/api';
 import {Maze, moveDirection, Point, TpGameState} from '../dashthroughmaze/dash';
 import {push} from 'react-router-redux';
 import {isUndefined} from "util";
+import * as ReactGA from 'react-ga';
 
 type GamesState = {
   games: {
@@ -82,6 +83,12 @@ function initMazeSuccessReducer(state: GamesState, action: InitMazeSuccessAction
   const gameState = maze['game-state'];
   const exitPath = m.exitPath();
   exitPath.shift();
+
+  ReactGA.event({
+    category: 'game',
+    action: 'Initialized',
+    label: m.id + ' ' + m.width + 'X' + m.height
+  });
 
   return {
     ...state,
@@ -182,6 +189,11 @@ export function* move(action: NextMoveAction) {
     if (isUndefined(direction)) {
       let f = pony;
       let t = nextPoint;
+      ReactGA.exception({
+        category: 'game',
+        action: 'Game Failed',
+        message: 'No move'
+      });
       throw new Error(`No move from (${f.x}, ${f.y}) to (${t.x}, ${t.y}))`);
     }
 
@@ -193,6 +205,15 @@ export function* move(action: NextMoveAction) {
     const domokun = maze.domokun;
     const gameState = tpMaze['game-state'];
 
+    if ( gameState.state && gameState.state.toLowerCase() !== 'active' ) {
+      ReactGA.event({
+        category: 'game',
+        action: 'Finished - ' + gameState.state ,
+        label: maze.id + ' ' + maze.width + 'X' + maze.height
+      });
+    }
+
+
     yield put(moveDone(mazeId, maze, pony, domokun, exitPath, escapeRoute, gameState));
   } catch(e) {
     let message = 'Move failed: ';
@@ -201,6 +222,11 @@ export function* move(action: NextMoveAction) {
     } else if (typeof e.message === 'string') {
       message += e.message;
     }
+    ReactGA.exception({
+      category: 'game',
+      action: 'Move failed',
+      message: message
+    });
     yield put(showNotificaitonAction(message));
   } finally {
     yield put(gameControlsStateAction(mazeId, true));
