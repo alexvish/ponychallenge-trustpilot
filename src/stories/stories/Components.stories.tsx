@@ -39,7 +39,7 @@ export class VisibleNotificationCallForm extends React.Component<NotificationCal
                 return;
             }
         }
-        this.setState({[name]:val});
+        this.setState({[name]:val} as NotificationCallFormState);
     }
 
     handleDisplayRequest = () => {
@@ -116,7 +116,7 @@ storiesOf('Components', module)
     let store = createStore((state = {proxy: {url: '', verified: true}}) =>state);
     return (
       <Provider store={store}>
-        <VisibleGameInitForm onStart={action("on-start")}/>
+        <VisibleGameInitForm proxyUrl={''} onStart={action('on-start')}/>
       </Provider>
     );
   }).add('Notificaiton', ()=> {

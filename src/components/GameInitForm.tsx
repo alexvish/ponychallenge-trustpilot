@@ -11,6 +11,9 @@ import {MazeInitData} from '../api/api';
 import {initMazeRequestAction} from '../actions/actions';
 import MenuItem from '@material-ui/core/MenuItem';
 
+export type MazeRequestPayload = MazeInitData;
+
+
 const decorate = withStyles((theme) => ({
   root: {
     padding: '50px 20px'
@@ -47,10 +50,9 @@ export interface GameInitFormProps {
 
 
 
-export type MazeRequestPayload = MazeInitData;
 
 
-type GameInitFormPropsExt = GameInitFormProps & WithStyles<'root'|'row'|'selField'|'selMenu'|'rgroup'>;
+type GameInitFormPropsExt = GameInitFormProps & WithStyles<'root'|'row'|'selField'|'selMenu'|'rGroup'>;
 
 class GameInitFormComponent extends React.Component<GameInitFormPropsExt, MazeRequestPayload> {
   constructor(props: any, context?: any) {
@@ -69,7 +71,7 @@ class GameInitFormComponent extends React.Component<GameInitFormPropsExt, MazeRe
   handleChange = name => event => {
     this.setState({
       [name]: event.target.value
-    });
+    } as MazeRequestPayload);
   }
 
   handleStart = event => {
@@ -124,7 +126,7 @@ class GameInitFormComponent extends React.Component<GameInitFormPropsExt, MazeRe
           <RadioGroup
             aria-label="pony name"
             name="maze-player-name"
-            className={classes.rgroup}
+            className={classes.rGroup}
             value={this.state['maze-player-name']}
             onChange={this.handleChange('maze-player-name')}
           >
@@ -165,7 +167,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onStart: (proxyUrl, form) => { dispatch(initMazeRequestAction(proxyUrl, form)); }
+  onStart: (proxyUrl: string, form: MazeRequestPayload) => { dispatch(initMazeRequestAction(proxyUrl, form)); }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VisibleGameInitForm);
